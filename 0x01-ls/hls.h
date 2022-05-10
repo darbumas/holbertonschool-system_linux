@@ -18,4 +18,8 @@
 
 int _strncmp(char *str0, char *str1, int n);
 
+
+void readOption(int *pos, char **argv, int argc);
+int _readdir(DIR *dir, char *dir_name);
+
 #endif
