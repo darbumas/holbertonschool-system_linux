@@ -1,7 +1,7 @@
 #include "hls.h"
 /**
  * main - program start
- * 
+ *
  * Return: 1 upon success, -1 otherwise
  */
 
