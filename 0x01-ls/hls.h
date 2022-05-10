@@ -14,4 +14,8 @@
 #include <pwd.h>
 #include <grp.h>
 
+/* String manipulation (helper func) */
+
+int _strncmp(char *str0, char *str1, int n);
+
 #endif

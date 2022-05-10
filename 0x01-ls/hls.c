@@ -29,7 +29,7 @@ int main(int argc, char **argv)
 		statResp = lstat(read->d_name, &filestat);
 		if (statResp != 0)
 			fprintf(stderr, "error in lstat: %s\n", strerror(errno));
-		if (strncmp(read->d_name, ".", 1) && strncmp(read->d_name, "..", 2))
+		if (_strncmp(read->d_name, ".", 1) && _strncmp(read->d_name, "..", 2))
 			printf("%s", read->d_name);
 		read = readdir(dir);
 		if (read != NULL)
