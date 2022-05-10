@@ -1,11 +1,13 @@
 #include "hls.h"
 /**
  * main - program start
+ * @argc: argument count
+ * @argv: argument pointers
  *
  * Return: 1 upon success, -1 otherwise
  */
 
-int main(void)
+int main(int argc, char **argv)
 {
 	DIR *dir;
 	char *dirPtr;
@@ -13,7 +15,11 @@ int main(void)
 	struct stat filestat;
 	int statResp;
 
-	dirPtr = ".";
+	if (argc <= 1)
+		dirPtr = ".";
+	else
+		dirPtr = argv[1];
+
 	dir = opendir(dirPtr);
 	if (dir == NULL)
 		return (0);
