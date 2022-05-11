@@ -31,7 +31,7 @@ int _readdir(DIR *dir, char *dir_name)
 		if (statResp != 0)
 		{
 			err_buf = malloc(256);
-			sprintf(err_buf, "./hls: cannot access %s: ", buf);
+			sprintf(err_buf, "./hls: cannot access %s", buf);
 			perror(err_buf);
 			free(buf);
 			free(err_buf);
@@ -60,7 +60,7 @@ int _readdir(DIR *dir, char *dir_name)
 int dirread(int argc, char **argv, int *pos)
 {
 	DIR *dir;
-	int file;
+	int file, err;
 	char *err_buf, *dirPtr;
 
 	for (file = 1; file < argc; file++)
@@ -69,12 +69,18 @@ int dirread(int argc, char **argv, int *pos)
 		{
 			dirPtr = argv[file];
 			dir = opendir(dirPtr);
+			err = errno;
 			if (dir == NULL)
 			{
-				err_buf = malloc(256);
-				sprintf(err_buf, "./hls: cannot access %s", dirPtr);
-				perror(err_buf);
-				free(err_buf);
+				if (err == ENOTDIR)
+					printf("%s\n", dirPtr);
+				else
+				{
+					err_buf = malloc(256);
+					sprintf(err_buf, "./hls: cannot access %s", dirPtr);
+					perror(err_buf);
+					free(err_buf);
+				}
 			}
 			else
 			{
