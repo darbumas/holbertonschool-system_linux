@@ -11,9 +11,6 @@ int main(int argc, char **argv)
 {
 	DIR *dir;
 	char *dirPtr;
-	//struct dirent *read;
-	//struct stat filestat;
-	//int statResp;
 	int pos[argc];
 	int file;
 
@@ -63,7 +60,8 @@ int main(int argc, char **argv)
  */
 void readOption(int *pos, char **argv, int argc)
 {
-	int i; 
+	int i;
+
 	for (i = 1; i < argc; i++)
 	{
 		if (argv[i][0] != '-')
