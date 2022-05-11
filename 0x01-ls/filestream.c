@@ -23,7 +23,7 @@ int _readdir(DIR *dir, char *dir_name)
 		statResp = lstat(read->d_name, &filestat);
 		if (dir_name[0] != '.')
 		{
-			sprintf(buf, "./%s%s", dir_name, read->d_name);
+			sprintf(buf, "./%s/%s", dir_name, read->d_name);
 			name = buf;
 		}
 		statResp = lstat(name, &filestat);
@@ -78,7 +78,8 @@ int dirread(int argc, char **argv, int *pos)
 			}
 			else
 			{
-				printf("%s:\n", dirPtr);
+				if (argc > 2)
+					printf("%s:\n", dirPtr);
 				_readdir(dir, dirPtr);
 			}
 			closedir(dir);
