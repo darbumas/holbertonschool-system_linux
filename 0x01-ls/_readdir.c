@@ -29,7 +29,7 @@ int _readdir(DIR *dir, char *dir_name)
 		{
 			fprintf(stderr, "./hls: cannot access %s: %s\n", name, strerror(errno));
 			free(buf);
-			exit(0);
+			return (0);
 		}
 		if (_strncmp(read->d_name, ".", 1) && _strncmp(read->d_name, "..", 2))
 		{
