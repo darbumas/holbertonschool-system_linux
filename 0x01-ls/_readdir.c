@@ -8,13 +8,16 @@
  */
 int _readdir(DIR *dir, char *dir_name)
 {
-	char *restrict buf = malloc(256);
+	char *buf;
 	char *name = dir_name;
 	struct stat filestat;
 	struct dirent *read;
 	int statResp;
 
 	read = readdir(dir);
+	buf = malloc(256);
+	if (buf == NULL)
+		return (0);
 	while (read)
 	{
 		statResp = lstat(read->d_name, &filestat);

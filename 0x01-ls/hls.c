@@ -11,7 +11,7 @@ int main(int argc, char **argv)
 {
 	DIR *dir;
 	char *dirPtr;
-	int pos[argc];
+	int pos[60];
 	int file;
 
 	if (argc <= 1)
