@@ -23,4 +23,5 @@ void readOption(int *pos, char **argv, int argc);
 int _readdir(DIR *dir, char *dir_name);
 int dirread(int argc, char **argv, int *pos);
 
+void error_handler(int val, char *err_file);
 #endif

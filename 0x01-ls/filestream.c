@@ -61,7 +61,7 @@ int dirread(int argc, char **argv, int *pos)
 {
 	DIR *dir;
 	int file, err;
-	char *err_buf, *dirPtr;
+	char *dirPtr;
 
 	for (file = 1; file < argc; file++)
 	{
@@ -76,10 +76,7 @@ int dirread(int argc, char **argv, int *pos)
 					printf("%s\n", dirPtr);
 				else
 				{
-					err_buf = malloc(256);
-					sprintf(err_buf, "./hls: cannot access %s", dirPtr);
-					perror(err_buf);
-					free(err_buf);
+					error_handler(err, dirPtr);
 				}
 			}
 			else
