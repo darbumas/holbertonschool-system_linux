@@ -24,30 +24,11 @@ int main(int argc, char **argv)
 		closedir(dir);
 	}
 	else
-		readOption(pos, argv, argc);
-
-	for (file = 1; file < argc; file++)
 	{
-		if (pos[file] != 0)
-		{
-			dirPtr = argv[file];
-			dir = opendir(dirPtr);
-			if (dir == NULL)
-			{
-				fprintf(stderr, "./hls: cannot access %s: %s\n",
-						dirPtr, strerror(errno));
-			}
-			else
-			{
-				printf("%s:\n", dirPtr);
-				_readdir(dir, dirPtr);
-			}
-			closedir(dir);
-		}
-		if (file + 1 < argc)
-			printf("\n");
+		readOption(pos, argv, argc);
+		file = dirread(argc, argv, pos);
 	}
-	return (1);
+	return (file);
 }
 
 /**
