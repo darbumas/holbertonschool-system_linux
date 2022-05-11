@@ -24,6 +24,7 @@ int main(int argc, char **argv)
 		if (dir == NULL)
 			return (0);
 		_readdir(dir, dirPtr);
+		closedir(dir);
 	}
 	else
 		readOption(pos, argv, argc);
@@ -44,11 +45,11 @@ int main(int argc, char **argv)
 				printf("%s:\n", dirPtr);
 				_readdir(dir, dirPtr);
 			}
+			closedir(dir);
 		}
 		if (file + 1 < argc)
 			printf("\n");
 	}
-	closedir(dir);
 	return (1);
 }
 
