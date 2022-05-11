@@ -3,16 +3,18 @@
  * _readdir - reads directory and prints the files in it (if found).
  * @dir: pointer to the stream
  * @dir_name: points to the name of given directory
+ * @flags: flag passed for formatting
+ * @flagCnt: number of flags passed
  *
  * Return: 1 on success
  */
-int _readdir(DIR *dir, char *dir_name)
+int _readdir(DIR *dir, char *dir_name, char *flags, int flagCnt)
 {
-	char *buf, *err_buf;
+	char *buf;
 	char *name = dir_name;
 	struct stat filestat;
 	struct dirent *read;
-	int statResp;
+	int statResp, err;
 
 	buf = malloc(256);
 	if (buf == NULL)
@@ -20,29 +22,20 @@ int _readdir(DIR *dir, char *dir_name)
 	read = readdir(dir);
 	while (read)
 	{
-		statResp = lstat(read->d_name, &filestat);
 		if (dir_name[0] != '.')
 		{
 			sprintf(buf, "./%s/%s", dir_name, read->d_name);
 			name = buf;
 		}
 		statResp = lstat(name, &filestat);
-
+		err = errno;
 		if (statResp != 0)
 		{
-			err_buf = malloc(256);
-			sprintf(err_buf, "./hls: cannot access %s", buf);
-			perror(err_buf);
+			error_handler(err, buf);
 			free(buf);
-			free(err_buf);
 			return (0);
 		}
-		if (_strncmp(read->d_name, ".", 1) && _strncmp(read->d_name, "..", 2))
-		{
-			printf("%s", read->d_name);
-			if (read != NULL)
-				printf(" ");
-		}
+		lsFormat(read, flags, flagCnt, filestat);
 		read = readdir(dir);
 	}
 	printf("\n");
@@ -52,43 +45,38 @@ int _readdir(DIR *dir, char *dir_name)
 
 /**
  * dirread - opens and reads dir from argv
- * @argc: argument count
- * @argv: argument vector
- * @pos: position of the file
+ * @flags: points to options given
+ * @param: array of pointer to files/directory
+ * @flagCnt: number of options
+ * @paramCnt: number of files/directory to list
  * Return: 1 on success
  */
-int dirread(int argc, char **argv, int *pos)
+int dirread(char *flags, char **param, int flagCnt, int paramCnt)
 {
 	DIR *dir;
 	int file, err;
 	char *dirPtr;
 
-	for (file = 1; file < argc; file++)
+	for (file = 0; file < paramCnt; file++)
 	{
-		if (pos[file] != 0)
+		dirPtr = param[file];
+		dir = opendir(dirPtr);
+		err = errno;
+		if (dir == NULL)
 		{
-			dirPtr = argv[file];
-			dir = opendir(dirPtr);
-			err = errno;
-			if (dir == NULL)
-			{
-				if (err == ENOTDIR)
-					printf("%s\n", dirPtr);
-				else
-				{
-					error_handler(err, dirPtr);
-				}
-			}
+			if (err == ENOTDIR)
+				printf("%s\n", dirPtr);
 			else
-			{
-				if (argc > 2)
-					printf("%s:\n", dirPtr);
-				_readdir(dir, dirPtr);
-			}
+				error_handler(err, dirPtr);
 			closedir(dir);
 		}
-		if (file + 1 < argc)
-			printf("\n");
+		else
+		{
+			if (paramCnt > 1)
+				printf("%s:\n", dirPtr);
+			_readdir(dir, dirPtr, flags, flagCnt);
+		}
+		closedir(dir);
 	}
 	return (1);
 }

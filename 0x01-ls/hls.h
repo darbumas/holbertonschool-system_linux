@@ -17,11 +17,14 @@
 /* String manipulation (helper func) */
 
 int _strncmp(char *str0, char *str1, int n);
+void lsFormat(struct dirent *read, char *flags, int flagCnt, struct stat statbuf);
 
+int filecount(char **f_array, char **argv, int argc);
+int flagcount(char *flags, int argc, char **argv);
 
-void readOption(int *pos, char **argv, int argc);
-int _readdir(DIR *dir, char *dir_name);
-int dirread(int argc, char **argv, int *pos);
+int _readdir(DIR *dir, char *dir_name, char *flags, int flagCnt);
+int dirread(char *flags, char **param, int flagCnt, int paramCnt);
 
 void error_handler(int val, char *err_file);
+
 #endif

@@ -9,45 +9,18 @@
 
 int main(int argc, char **argv)
 {
-	DIR *dir;
-	char *dirPtr;
-	int pos[60];
-	int file;
+	char **param;
+	char *flags;
+	int res, paramCnt, flagCnt;
 
-	if (argc <= 1)
-	{
-		dirPtr = ".";
-		dir = opendir(dirPtr);
-		if (dir == NULL)
-			return (0);
-		_readdir(dir, dirPtr);
-		closedir(dir);
-	}
-	else
-	{
-		readOption(pos, argv, argc);
-		file = dirread(argc, argv, pos);
-	}
-	return (file);
-}
+	param = malloc(sizeof(char **) * argc);
+	flags = malloc(sizeof(char *) * argc);
 
-/**
- * readOption - sets index of arguments.
- * @pos: array of index for found files
- * @argv: pointer to input argument
- * @argc: argument count
- *
- * Return: Nothing
- */
-void readOption(int *pos, char **argv, int argc)
-{
-	int i;
+	flagCnt = flagcount(flags, argc, argv);
+	paramCnt = filecount(param, argv, argc);
+	res = dirread(flags, param, flagCnt, paramCnt);
 
-	for (i = 1; i < argc; i++)
-	{
-		if (argv[i][0] != '-')
-			pos[i] = 1;
-		else
-			pos[i] = 0;
-	}
+	free(param);
+	free(flags);
+	return (res);
 }
