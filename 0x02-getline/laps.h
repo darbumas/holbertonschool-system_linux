@@ -5,12 +5,13 @@
 #include <stdlib.h>
 
 /**
- * car - structure that defines a car
+ * struct car - structure that defines a car
  * @id: unique ID of each car
  * @laps: lap count
  * @next: points to the next car
  */
-typedef struct car {
+typedef struct car
+{
 	int id;
 	int laps;
 	struct car *next;
