@@ -55,7 +55,8 @@ void join_race(racecar **head, int id)
 		printf("Car %d joined the race\n", id);
 		return;
 	}
-	for (car = *head; car->next && car->next->id <= id; car = car->next);
+	for (car = *head; car->next && car->next->id <= id; car = car->next)
+		;
 
 	if (car->id == id)
 	{
