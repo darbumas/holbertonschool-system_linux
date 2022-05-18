@@ -1,6 +1,7 @@
 #include "_getline.h"
 
-char *read_buf(char *, int);
+char *readbuf(char *, int);
+int _strlen(char *);
 /**
  * _getline - reads an entire line from a file descriptor
  * @fd: file descriptor to read from
@@ -20,17 +21,17 @@ char *_getline(const int fd)
 		read(fd, buf, READ_SIZE);
 		size = 0;
 		line = strdup(buf);
-		line = read_buf(line, 1);
+		line = readbuf(line, 1);
 		if (line != NULL)
-			size += strlen(line) + 1;
+			size += _strlen(line) + 1;
 		if (buf[0] == '\000')
 			return (NULL);
 		return (line);
 	}
 	line = strdup(buf);
-	line = read_buf(line, 0);
+	line = readbuf(line, 0);
 	if (line != NULL)
-		size += strlen(line) + 1;
+		size += _strlen(line) + 1;
 	return (line);
 }
 
@@ -65,4 +66,21 @@ char *readbuf(char *buf, int file)
 	omega++;
 	alpha++;
 	return (txt);
+}
+
+/**
+ * _strlen - returns string length
+ * @str: pointer to string
+ * Return: length
+ */
+int _strlen(char *str)
+{
+	int len = 0;
+
+	while (*str)
+	{
+		str++;
+		len++;
+	}
+	return (len);
 }
