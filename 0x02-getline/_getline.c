@@ -25,7 +25,7 @@ char *_getline(const int fd)
 			size += strlen(line) + 1;
 		if (buf[0] == '\000')
 			return (NULL);
-		return line;
+		return (line);
 	}
 	line = strdup(buf);
 	line = read_buf(line, 0);
@@ -35,12 +35,13 @@ char *_getline(const int fd)
 }
 
 /**
- * read_buf - returns text read from buffer
- * @buf: pointer to the buffer
+ * readbuf - returns text read from buffer
+ * @buf: pointer to buffer
+ * @file: indicates if file is present
  * Return: text from buffer
  */
 
-char *read_buf(char *buf, int file)
+char *readbuf(char *buf, int file)
 {
 	char *txt;
 	static int alpha, omega;
