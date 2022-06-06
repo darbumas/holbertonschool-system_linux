@@ -11,15 +11,17 @@
 /**
  * struct fildes - defines a struct for a file descriptor
  * @fd: file descriptor
- * @one: tracks characters
- * @two: tracks characters
- * @buffer: buffer to read from
+ * @i: index
+ * @len: length of buf
+ * @buf: buffer to read from
  * @next: points to the next node
  */
 typedef struct fildes
 {
-	int fd, one, two;
-	char *buffer;
+	int fd;
+	char *buf;
+	size_t i;
+	size_t len;
 	struct fildes *next;
 } FILE_T;
 
