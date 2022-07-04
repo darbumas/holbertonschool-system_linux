@@ -2,63 +2,57 @@
 """
 Locates and replaces a string in the heap of a running process
 """
-import sys
+from sys import argv, exit
 
 
 def main():
     """find and replace string"""
-    if len(sys.argv) != 4:
-        print("Usage: read_write_heap.py pid search_string replace_string")
+    if len(argv) != 4:
+        print("Usage: {} pid search_string replace_string".format(argv[0]))
         exit(1)
-    pid = sys.argv[1]
-    searchStr = sys.argv[2]
-    replaceStr = sys.argv[3]
+    pid = argv[1]
+    searchStr = argv[2]
+    replaceStr = argv[3]
+    if "" in [pid, searchStr]:
+        print("Missing [pid] and/or [search string]")
+    elif replaceStr == '':
+        replaceStr = ' ' * len(searchStr)
 
     if len(replaceStr) > len(searchStr):
         exit(1)
+    
+    mapsFile = "/proc/{}/maps".format(pid)
+    memFile = "/proc/{}/mem".format(pid)
 
-    try:
-        mapsFile = open("proc/{}/maps".format(pid), 'r')
-    except Exception as e:
-        print(e)
-        exit(1)
-
-    try:
-        memFile = open("proc/{}/mem".format(pid), 'r+b', 0)
-    except Exception as e:
-        mapsFile.close()
-        print(e)
-        exit(1)
-
-    heap = False
-    for line in mapsFile.readlines():
-        strLine = line.split()
-        if strLine[len(strLine) - 1] == "[heap]":
-            heap = True
-            rangeMem = strLine[0].split('-')
-            strart = int(rangeMem[0], 16)
-            end = int(rangeMem[1], 16)
-            memFile.seek(start)
-            s = memFile.read(end - start)
-            idx = s.find(bytes(searchStr, 'utf-8'))
-
-            if idx == -1:
+    heap = {
+        "start": '',
+        "end": '',
+        "mode": '',
+        "mem": ''
+    }
+    with open(mapsFile) as maps:
+        for line in maps:
+            if "[heap]" in line:
+                s = line.split()
+                s[0] = s[0].split('-')
+                s[0] = list(map(lambda x: int('0x' + x, 16), s[0]))
+                [heap['start'], heap['end']] = s[0]
+                heap['mode'] = s[1]
                 break
+    if heap['start'] == '':
+        print("Missing heap")
+        exit(2)
 
-            memFile.seek(start + idx)
-            memFile.write(bytes(replaceStr, 'utf-8') +b'\x00')
-            break
-
-    mapsFile.close()
-    memFile.close()
-
-    if idx == -1:
-        exit(1)
-
-    if not heap:
-        exit(1)
-
-    print("replacing string in memory: /proc/{}/mem".format(pid))
+    with open(memFile, 'rb+') as mem:
+        mem.seek(heap['start'])
+        heap['mem'] = mem.read(heap['end'] - heap['start'])
+        try:
+            i = heap['mem'].index(bytes(searchStr, "ASCII"))
+        except ValueError:
+            print("Not matching string")
+            exit(3)
+        mem.seek(heap['start'] + i)
+        mem.write(bytes(replaceStr, "ASCII"))
 
 if __name__ == "__main__":
     main()
