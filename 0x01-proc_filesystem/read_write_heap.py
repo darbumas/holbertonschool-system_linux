@@ -2,79 +2,55 @@
 """
 Locates and replaces a string in the heap of a running process
 """
-from sys import argv, exit
+from sys import argv
 
 
-def main():
-    """find and replace string"""
-    if len(argv) != 4:
-        print("Usage: {} pid search_string replace_string".format(argv[0]))
-        exit(1)
-    pid = argv[1]
-    searchStr = argv[2]
-    replaceStr = argv[3]
-    if "" in [pid, searchStr]:
-        print("Missing [pid] and/or [search string]")
-    elif replaceStr == '':
-        replaceStr = ' ' * len(searchStr)
-
-    if len(replaceStr) > len(searchStr):
-        exit(1)
+def read_mapsFile(pid):
+    """returns address range of process running"""
+    start = None
+    stop = None
     try:
-        mapsFile = open("/proc/{}/maps".format(pid), 'r')
-    except OSError as e:
-        print("Unable to open file proc/{}/maps\nOSError : {}".format(pid, e))
+        with open("/proc/{:d}/maps".format(pid), "r") as maps:
+            for line in maps:
+                if line.endswith("[heap]\n"):
+                    start, stop = \
+                        [int(x, 16) for x in line.split(" ")[0].split("-")]
+    except Exception as e:
+        print(e)
         exit(1)
+    if not start or not stop:
+        print("[ERROR] Heap address not found.") or exit(1)
+    print("[*] Heap starts at {:02X}".format(start))
+    return start, stop
 
-    print("[*] maps: /proc/{}/maps".format(pid))
-    print("[*] mem: /proc/{}/mem".format(pid))
 
-    heapFound = None
-    for line in mapsFile:
-        if "heap" in line:
-            heapFound = line.split()
-    mapsFile.close()
-
-    if heapFound is None:
-        print("No heap found!")
-        exit(1)
-    else:
-        print('\n'.join(("[*] Found: {}".format(heapFound[-1]),
-                         "\tpathname = {}".format(heapFound[-1]),
-                         "\taddr range = {}".format(heapFound[0]),
-                         "\tperm = {}".format(heapFound[1]),
-                         "\toffset (in bytes) = {}".format(heapFound[2]),
-                         "\tinode = {}".format(heapFound[4]))))
-    addr = heapFound[0].split('-')
-    print("[*] Addresses start [{}] | end [{}]".format(addr[0].lstrip('0'),
-                                                       addr[1].lstrip('0')))
-
-    perms = heapFound[1]
-    if 'r' not in perms:
-        print("Heap does not have read permission")
-        exit(0)
-    if 'w' not in perms:
-        print("Heap does not have write permission")
-        exit(0)
-
+def read_write_memFile(pid, searchStr, replaceStr, start, stop):
+    """locates string in proc/[pid]/mem and overwrites it"""
     try:
-        memFile = open("/proc/{}/mem".format(pid), 'rb+')
-    except OSError as e:
-        print("Can't open file /proc/{}/mem: OSError: {}".format(pid, e))
+        with open("/proc/{:d}/mem".format(pid), "r+b") as mem:
+            mem.seek(start)
+            data = mem.read(stop - start)
+            print("[*] Read {:d} bytes".format(stop - start))
+            s = data.find(searchStr.encode())
+            if s > -1:
+                print("[*] String found at {:02X}"
+                      .format(start + s))
+                mem.seek(start + s)
+                r = mem.write(replaceStr.encode() + b'\x00')
+                print("[*] {:d} bytes written!".format(r))
+            else:
+                print(
+                    "[ERROR] String '{:s}' not found in heap."
+                    .format(searchStr))
+                exit(1)
+    except Exception as e:
+        print(e)
         exit(1)
-
-    heapStart = int(addr[0], 16)
-    heapEnd = int(addr[1], 16)
-    memFile.seek(heapStart)
-    heap = memFile.read(heapEnd - heapStart)
-    offset = heap.find(bytes(searchStr, "ASCII"))
-    if offset == -1:
-        print("can't find {} in /proc/{}/mem".format(searchStr, pid))
-        exit(1)
-    else:
-        print("[*] Writing '{}' at {}".format(replaceStr,
-                                              hex(heapStart + offset)[2:]))
 
 
 if __name__ == "__main__":
-    main()
+    if len(argv) < 4:
+        print("Usage: {} pid search_string replace_string")
+        exit(1)
+    start, stop = read_mapsFile(int(argv[1]))
+    read_write_memFile(int(argv[1]), argv[2], argv[3], start, stop)
