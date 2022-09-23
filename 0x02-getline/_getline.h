@@ -26,5 +26,9 @@ typedef struct fildes
 } FILE_T;
 
 char *_getline(const int);
+char *read_buf(FILE_T *frame);
+FILE_T *get_struct(FILE_T *head, const int fd);
+char *find_char(char *str, char c, ssize_t size);
+void *_realloc(void *prev, unsigned int last, unsigned int new);
 
 #endif
