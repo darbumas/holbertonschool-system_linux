@@ -11,7 +11,8 @@
  * @args: args
  * Return: list of folders
  */
-char **validate_dir(int argc, char **argv, int *ret, int *fcnt, int *err, int *ficnt, char *args)
+char **validate_dir(int argc, char **argv, int *ret, int *fcnt,
+	int *err, int *ficnt, char *args)
 {
 	struct stat file;
 	char **folders = NULL, **files;
@@ -20,7 +21,7 @@ char **validate_dir(int argc, char **argv, int *ret, int *fcnt, int *err, int *f
 	files = _calloc(100, sizeof(*files));
 	if (argc != 1)
 	{
-		folders = malloc(sizeof(*folders) *argc);
+		folders = malloc(sizeof(*folders) * argc);
 		if (folders == NULL)
 			return (NULL);
 		for (i = 1, j = 0; argv[i] != NULL; i++, j++)
@@ -31,7 +32,7 @@ char **validate_dir(int argc, char **argv, int *ret, int *fcnt, int *err, int *f
 			else if (argv[i][0] == '-')
 				j--, _strcmp(argv[i], "--") != 0 ? d = 1 : 1;
 			else if (lstat(argv[i], &file) == 0 && S_ISREG(file.st_mode))
-				files[k] = _strdup(argv[i]), (*fcnt)++, j--, k++;
+				files[k] = _strdup(argv[i]), (*ficnt)++, j--, k++;
 			else
 				fprintf(stderr, "hls: cannot access %s: No such file or directory\n",
 						argv[i]), (*ret) = 2, (*err)++, j--;

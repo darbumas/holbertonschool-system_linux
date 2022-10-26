@@ -11,6 +11,7 @@
 #include <pwd.h>
 #include <grp.h>
 #include <stdbool.h>
+#include <sys/sysmacros.h>
 
 /**
  * struct file_s - doubly linked list
@@ -48,10 +49,10 @@ char *get_date(struct stat);
 long int parse_date(struct stat);
 
 /* String operators */
-int _strlen(char *);
+int _strlen(char *s);
 char *_strcat(char *, char *);
 char *_strdup(char *);
-int _strcmp(char *, char *);
+int _strcmp(char *s0, char *s1);
 char *_strstr(char *, char *);
 unsigned long int _atoi(char *);
 

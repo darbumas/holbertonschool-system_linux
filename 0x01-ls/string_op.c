@@ -9,12 +9,11 @@
  */
 char *_strstr(char *haystack, char *needle)
 {
-	char *i, *j;
 
 	while (*haystack != '\0')
 	{
-		i = haystack;
-		j = needle;
+		char *i = haystack;
+		char *j = needle;
 
 		while (*j == *haystack && *j != '\0' && *haystack != '\0')
 		{
@@ -30,27 +29,27 @@ char *_strstr(char *haystack, char *needle)
 
 /**
  * _strdup - duplicates a string
- * @s: string to duplicate
+ * @str: string to duplicate
  *
  * Return: pointer to the duplicated string
  */
-char *_strdup(char *s)
+char *_strdup(char *str)
 {
-	int i, j;
-	char *ptr;
+	char *p;
+	int i, s;
 
 	i = 0;
-	if (s == NULL)
+	if (str == NULL)
 		return (NULL);
-	while (s[i] != '\0')
+	while (str[i] != '\0')
 		i++;
-	ptr = malloc(i * sizeof(*s) + 1);
-	if (ptr == NULL)
+	p = malloc(i * sizeof(*str) + 1);
+	if (p == NULL)
 		return (NULL);
-	for (j = 0; j < i; j++)
-		*(ptr + j) = *(s + j);
-	*(ptr + j) = '\0';
-	return (ptr);
+	for (s = 0; s < i; s++)
+		*(p + s) = *(str + s);
+	*(p + s) = '\0';
+	return (p);
 }
 
 /**
@@ -70,18 +69,20 @@ int _strlen(char *s)
 
 /**
  * _strcmp - compares two strings
- * @s0: pointer to first string
- * @s1: pointer to second string
+ * @s1: pointer to first string
+ * @s2: pointer to second string
  * Return: 0 if both strings are equal; if different, a neg/pos value
  */
-int _strcmp(char *s0, char *s1)
+int _strcmp(char *s1, char *s2)
 {
-	int i;
+	int j;
 
-	for (i = 0; s0[i] != '\0' || s1[i] != '0'; i++)
+	for (j = 0; s1[j] != '\0' || s2[j] != '\0'; j++)
 	{
-		if (s0[i] != s1[i])
-			return (s0[i] - s1[i]);
+		if (s1[j] != s2[j])
+		{
+			return (s1[j] - s2[j]);
+		}
 	}
 	return (0);
 }

@@ -52,7 +52,7 @@ char **create_array(file_t **head)
  * _index - read the argv and select the valid args
  * @valid: this argument contains the number of args passed in the call
  * @arg: double pointer to the arguments passed in the call
- * Return: true if the arg is valid, otherwise false
+ * Return: valid int; -1 otherwise
  */
 int _index(char *valid, char arg)
 {

@@ -26,8 +26,9 @@ file_t *add_node(file_t **head, char *str, struct stat file)
 		return (new);
 	}
 	while (actual->next)
+	{
 		actual = actual->next;
-
+	}
 	actual->next = new;
 	new->prev = actual;
 	return (new);
