@@ -39,8 +39,8 @@ int main(int argc, char *argv[])
 	if (ret == 3)
 	{
 		for (i = 0; err[i] != NULL; i++)
-			fprintf(stderr, "hls: cannot open directory %s: Permission denied\n",
-				err[i]), free(err[i]);
+			fprintf(stderr, "%s: cannot open directory %s: Permission denied\n",
+				argv[0], err[i]), free(err[i]);
 		free(err), ret = 2;
 	}
 	else
