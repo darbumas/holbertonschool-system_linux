@@ -34,8 +34,8 @@ char **validate_dir(int argc, char **argv, int *ret, int *fcnt,
 			else if (lstat(argv[i], &file) == 0 && S_ISREG(file.st_mode))
 				files[k] = _strdup(argv[i]), (*ficnt)++, j--, k++;
 			else
-				fprintf(stderr, "hls: cannot access %s: No such file or directory\n",
-						argv[i]), (*ret) = 2, (*err)++, j--;
+				fprintf(stderr, "%s: cannot access %s: No such file or directory\n",
+						argv[0], argv[i]), (*ret) = 2, (*err)++, j--;
 		}
 	}
 	(*ficnt) > 0 ? print_dir(files, args, ".") : 1;
