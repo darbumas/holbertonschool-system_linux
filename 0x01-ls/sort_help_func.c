@@ -47,23 +47,7 @@ char **create_array(file_t **head)
 		files[i] = _strdup(h->var);
 	return (files);
 }
-/**
- * _atoi - converts a string to integer
- *@s: the string for convert to integer
-* Return: converted value.
-*/
-unsigned long int _atoi(char *s)
-{
-	unsigned long int counter = 0;
-	unsigned long int number = 0;
 
-	while ((s[counter] >= '0') && (s[counter] <= '9'))
-	{
-		number = number * 10 + (s[counter] - '0');
-		counter++;
-	}
-	return (number);
-}
 /**
  * _index - read the argv and select the valid args
  * @valid: this argument contains the number of args passed in the call

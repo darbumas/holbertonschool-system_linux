@@ -125,7 +125,8 @@ void sortby_time(file_t **list)
 			swap_2->next = swap_1, swap_1->prev = swap_2;
 			tail = head, head = head->prev;
 			while (head && head->prev)
-			{ aux = head;
+			{
+				aux = head;
 				if (aux->time < aux->prev->time)
 				{
 					swap_1 = aux->prev, swap_2 = aux;

@@ -26,8 +26,9 @@ char *validate_args(char **argv, char **err)
 				}
 				else
 				{
-					fprintf(stderr, 
-					"hls: invalid option -- '%c'\nTry 'hls --help' for more information.\n", argv[i][j]);
+					fprintf(stderr,
+					"hls: invalid option -- '%c'\nTry 'hls --help' for more information.\n",
+					argv[i][j]);
 					free(err);
 					exit(2);
 				}

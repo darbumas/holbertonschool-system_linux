@@ -11,7 +11,8 @@
  * @args: pointer to args
  * Return: array of strings
  */
-char **locate_folder(int argc, char **argv, int *ret, int *fcnt, int *err, int *ficnt, char *args)
+char **locate_folder(int argc, char **argv, int *ret, int *fcnt,
+			int *err, int *ficnt, char *args)
 {
 	struct stat file;
 	char **folders = NULL, **files;
@@ -20,12 +21,13 @@ char **locate_folder(int argc, char **argv, int *ret, int *fcnt, int *err, int *
 	files = _calloc(100, sizeof(*files));
 	if (argc != 1)
 	{
-		folders = malloc(sizeof(*folders) *argc);
+		folders = malloc(sizeof(*folders) * argc);
 		if (folders == NULL)
 			return (NULL);
 		for (i = 1, j = 0; argv[i] != NULL; i++, j++)
 		{
-			if (lstat(argv[i], &file) == 0 && S_ISDIR(file.st_mode) && !S_ISREG(file.st_mode))
+			if (lstat(argv[i], &file) == 0 && S_ISDIR(file.st_mode) &&
+				!S_ISREG(file.st_mode))
 				folders[j] = _strdup(argv[i]), (*fcnt)++;
 			else if (argv[i][0] == '-')
 				j--, _strcmp(argv[i], "--") != 0 ? d = 1 : 1;
@@ -37,7 +39,7 @@ char **locate_folder(int argc, char **argv, int *ret, int *fcnt, int *err, int *
 		}
 	}
 	(*ficnt) > 0 ? print_dir(files, args, ".") : 1;
-	(*ficnt) > 0 && (*ficnt) > 0 ? printf("\n") : 1;
+	(*ficnt) > 0 && (*fcnt) > 0 ? printf("\n") : 1;
 	if (((*fcnt) == 0 && (*err) == 0 && (*ficnt) == 0) ||
 		(d == 1 && ((*fcnt) == 0 && (*err) == 0 && (*ficnt) == 0)))
 	{

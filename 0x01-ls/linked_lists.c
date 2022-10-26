@@ -26,9 +26,8 @@ file_t *add_node(file_t **head, char *str, struct stat file)
 		return (new);
 	}
 	while (actual->next)
-	{
 		actual = actual->next;
-	}
+
 	actual->next = new;
 	new->prev = actual;
 	return (new);
@@ -117,7 +116,7 @@ int delete_node(file_t **head, unsigned int index)
  * get_nodes - get the alloc blocks
  * @files: all the files in a folder
  * @folder: the folder thath containes the fail
- * return: block size
+ * Return: block size
  */
 int get_nodes(char **files, char *folder)
 {

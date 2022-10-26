@@ -20,8 +20,9 @@ DIR *open_dir(char *folder)
  * read_dir - reads a folder
  * @dir: directory to ready
  * @folder: name of folder
- * @ret: return value
+ * @ret: return values
  * @err: array of string for errors
+ * Return: names of files in an array of strings.
  */
 char **read_dir(DIR *dir, char *folder, int *ret, char **err)
 {

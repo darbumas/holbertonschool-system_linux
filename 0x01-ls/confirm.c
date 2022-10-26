@@ -1,5 +1,4 @@
 #include "hls.h"
-#include <stdbool.h>
 
 /**
  * confirm - evaluates to true or false whether options are valid
