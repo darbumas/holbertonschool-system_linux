@@ -27,7 +27,7 @@ char *_getline(const int fd)
 			fb = fb->next;
 			free(tmp);
 		}
-		memset(&head, 0, sizeof(head));
+		_memset((void *)&head, 0, sizeof(head));
 		return (NULL);
 	}
 	fb = get_struct(&head, fd);
@@ -102,7 +102,7 @@ char *read_buf(FILE_T *frame)
 			frame->buf = _realloc(frame->buf, frame->len, frame->len + count + 1);
 			if (!frame->buf)
 				return (NULL);
-			memcpy(frame->buf + frame->len, buf, count), frame->len += count;
+			_memcpy((void *)(frame->buf + frame->len), buf, count), frame->len += count;
 			p = find_char(frame->buf + (frame->len - count), '\n', count);
 			if (p)
 			{
@@ -115,7 +115,7 @@ char *read_buf(FILE_T *frame)
 	line = malloc(1 + (p - (frame->buf + frame->i)));
 	if (!line)
 		return (NULL);
-	memcpy(line, frame->buf + frame->i, 1 + (p - (frame->buf + frame->i)));
+	_memcpy((void *)line, frame->buf + frame->i, 1 + (p - (frame->buf + frame->i)));
 	frame->i = (p - frame->buf) + 1;
 	if (frame->i >= frame->len)
 	{
