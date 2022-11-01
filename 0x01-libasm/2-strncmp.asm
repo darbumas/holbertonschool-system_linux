@@ -1,6 +1,6 @@
 BITS 64
 
-global asm_strncmp
+	global asm_strncmp
 
 asm_strncmp:
 	push rbp
@@ -8,6 +8,7 @@ asm_strncmp:
 
 	mov R8, 0h
 	mov R9, 0h
+
 asm_loop:
 	mov al, [rdi + R9]
 	mov bl, [rsi + R9]
