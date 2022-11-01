@@ -30,12 +30,12 @@ equal_char:
 
 al_big:
 	inc R9
-	neg R9 
+	neg R9
 	mov R8, R9
 	jmp asm_end
 
 bl_big:
-	inc R9 
+	inc R9
 	mov R8, R9
 	jmp asm_end
 
