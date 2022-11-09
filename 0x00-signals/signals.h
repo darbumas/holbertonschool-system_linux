@@ -1,5 +1,5 @@
 #ifndef SIGNALS_H
-#define SIGNNALS_H
+#define SIGNALS_H
 
 #include <stdio.h>
 #include <stdlib.h>
