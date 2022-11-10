@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <string.h>
+#include <errno.h>
+#include <unistd.h>
 
 int handle_signal(void);
 void (*current_handler_signal(void))(int);
