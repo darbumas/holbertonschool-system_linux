@@ -59,4 +59,4 @@ int print_sym(hdrs_t *);
 void init_shdr(hdrs_t *);
 void init_ehdr(hdrs_t *);
 
-#endif 
+#endif
