@@ -9,5 +9,8 @@ OBJS = $(patsubst %.c, %.o, $(SRC))
 
 hnm: $(0)
 	$(CC) $(CFLAGS) $(0) -o hnm
+
+hobjdump: hobjdump.c
+	$(CC) $(CFLAGS) hobjdump.c -o hobjdump	
 clean:
 	rm -f $(OBJS) hnm
