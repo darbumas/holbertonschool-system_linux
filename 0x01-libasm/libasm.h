@@ -15,4 +15,4 @@ size_t asm_strspn(const char *s, const char *accept);
 size_t asm_strcspn(const char *s, const char *reject);
 char *asm_strpbrk(const char *s, const char *accept);
 
-#endif
+#endif /* libasm.h */

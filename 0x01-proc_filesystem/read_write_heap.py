@@ -49,8 +49,8 @@ def read_write_memFile(pid, searchStr, replaceStr, start, stop):
 
 
 if __name__ == "__main__":
-    if len(argv) < 4:
-        print("Usage: {} pid search_string replace_string")
+    if len(argv) < 4 or len(argv[2]) < len(argv[3]):
+        print("Usage: {} pid search_string replace_string".format(argv[0]))
         exit(1)
     start, stop = read_mapsFile(int(argv[1]))
     read_write_memFile(int(argv[1]), argv[2], argv[3], start, stop)

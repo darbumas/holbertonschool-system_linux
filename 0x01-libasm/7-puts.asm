@@ -8,9 +8,11 @@ BITS 64
 asm_puts:
     push    rbp
     mov     rbp, rsp
+
     push    rdi
     call    asm_strlen
     pop     rdi
+
     push    rdi
     push    rsi
     mov     rdx, rax
@@ -22,6 +24,7 @@ asm_puts:
 end:
     pop     rsi
     pop     rdi
+
     mov     rsp, rbp
     pop     rbp
     ret

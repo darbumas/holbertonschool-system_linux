@@ -7,6 +7,7 @@ BITS 64
 asm_strcasecmp:
 	push rbp
 	mov rbp, rsp
+
 	push rcx
 	push r8
 	push r9
@@ -45,6 +46,7 @@ end:
 	pop r9
 	pop r8
 	pop rcx
+
 	mov rsp, rbp
 	pop rbp
 	ret

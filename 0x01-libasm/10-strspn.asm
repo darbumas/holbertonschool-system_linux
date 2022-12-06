@@ -2,11 +2,12 @@ BITS 64
 
 	global asm_strspn
 
-    section .text
+	section .text
 
 asm_strspn:
 	push rbp
 	mov rbp, rsp
+
 	push rbx
 	push rcx
 	push r11
@@ -33,6 +34,7 @@ end:
 	pop r11
 	pop rcx
 	pop rbx
+
 	mov rsp, rbp
 	pop rbp
 	ret

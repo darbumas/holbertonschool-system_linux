@@ -6,6 +6,7 @@ BITS 64
 asm_strpbrk:
 	push rbp
 	mov rbp, rsp
+
 	push rcx
 	push rbx
 	push r8
@@ -43,6 +44,7 @@ end:
 	pop r8
 	pop rbx
 	pop rcx
+
 	mov rsp, rbp
 	pop rbp
 	ret

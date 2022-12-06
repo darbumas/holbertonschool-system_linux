@@ -7,6 +7,7 @@ BITS 64
 asm_strncasecmp:
     push rbp
     mov rbp, rsp
+
     push r8
     push r9
     push rcx
@@ -49,6 +50,7 @@ end:
     pop rcx
     pop r9
     pop r8
+
     mov rsp, rbp
     pop rbp
     ret
