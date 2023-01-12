@@ -16,14 +16,14 @@ distclean: clean
 tags:
 	$(CTAGS) -f $(TAGS) -R
 
-strace_0: syscalls.h SRC/strace_0.c
+strace_0: SRC/strace_0.c
 		$(CC) $(CFLAGS) $^ -o $@
 
-strace_1: syscalls.h SRC/strace_1.c
+strace_1: SRC/strace_1.c
 		$(CC) $(CFLAGS) $^ -o $@
 
-strace_2: syscalls.h SRC/strace_2.c
+strace_2: SRC/strace_2.c
 		$(CC) $(CFLAGS) $^ -o $@
 
-strace_3: syscalls.h SRC/strace_3.c
+strace_3: SRC/strace_3.c
 		$(CC) $(CFLAGS) $^ -o $@

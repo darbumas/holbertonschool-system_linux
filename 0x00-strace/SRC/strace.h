@@ -12,6 +12,6 @@
 #include <unistd.h>
 
 #include <x86_64-linux-gnu/sys/user.h>
-
+#include "syscalls.h"
 
 #endif /* _STRACE_H_ */
