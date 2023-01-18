@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include "list.h"
+#include <stdarg.h>
 
 /**
  * struct pixel_s - RGB pixel
