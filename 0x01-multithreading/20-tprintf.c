@@ -2,10 +2,13 @@
 
 static pthread_mutex_t mutex;
 
+void mutex_init(void) __attribute__((constructor));
+void mutex_destroy(void) __attribute__((destructor));
+
 /**
  * mutex_init - initializes a mutex
  */
-__attribute__((constructor)) void mutex_init(void)
+void mutex_init(void)
 {
 	if (pthread_mutex_init(&mutex, NULL) != 0)
 	{
@@ -17,7 +20,7 @@ __attribute__((constructor)) void mutex_init(void)
 /**
  * mutex_destroy - destroys a mutex
  */
-__attribute__((destructor)) void mutex_destroy(void)
+void mutex_destroy(void)
 {
 	if (pthread_mutex_destroy(&mutex) != 0)
 	{
