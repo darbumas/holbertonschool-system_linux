@@ -1,5 +1,4 @@
 #include "httprotocol.h"
-#include <string.h>
 
 /**
  * main - program entry
@@ -19,14 +18,15 @@ int main(void)
  */
 int parse_request(int client_id, char *buffer)
 {
-	char *query, *path, *saveptr1, *saveptr2, *delim = " \t\r\n";
+	char *query, *path, *saveptr1, *saveptr2;
+	char *delim = " \t\r\n";
 	char *key, *val;
 
 	strtok(buffer, delim);
 	path = strtok(NULL, delim);
 	path = strtok_r(path, "?", &saveptr1);
 	printf("Path: %s\n", path);
-	query = strtok_r(NULL, "&", saveptr1);
+	query = strtok_r(NULL, "&", &saveptr1);
 
 	while (query)
 	{
