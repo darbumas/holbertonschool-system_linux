@@ -65,7 +65,7 @@ int roger_that(int server_id)
 	}
 
 	inet_ntop(AF_INET, &address.sin_addr, buffer, INET_ADDRSTRLEN);
-	printf("Connected client IP: %s\n", inet_ntoa(address.sin_addr));
+	printf("Client connected: %s\n", inet_ntoa(address.sin_addr));
 
 	bytes_recv = recv(new_socket, buffer, BUFFER_SZ, 0);
 	if (bytes_recv > 0)

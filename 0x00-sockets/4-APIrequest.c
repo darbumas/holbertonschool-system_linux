@@ -23,7 +23,7 @@ int parse_request(int client_id, char *buffer)
 	method = strtok(buffer, delim);
 	path = strtok(NULL, delim);
 	protocol = strtok(NULL, delim);
-	printf("HTTP method: %s\nRequested path: %s\nProtocol version: %s\n",
+	printf("Method: %s\nPath: %s\nVersion: %s\n",
 			method, path, protocol);
 
 	return (send_response(client_id, "HTTP/1.1 200 OK\n\n"));
