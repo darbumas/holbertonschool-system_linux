@@ -7,7 +7,9 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <string.h>
+#include <ctype.h>
 
+#define CRLF "\r\n"
 #define PORT 8080
 #define BUFFER_SZ 1024
 
