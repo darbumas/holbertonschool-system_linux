@@ -34,4 +34,6 @@ typedef struct post_s
 	struct post_s *next;
 } post_t;
 
+char *trimwhitespace(char *);
+
 #endif
